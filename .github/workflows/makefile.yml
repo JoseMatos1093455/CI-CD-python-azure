@@ -1,0 +1,30 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v5.2.0
+      with:
+        python-version: 3.9
+        cache: pip
+          
+    - name: Install dependencies
+      run: make install
+
+    - name: Run check
+      run: make lint
+
+    - name: Test with Pytest
+      run: make test4
+
+    - name: Format code with python
+      run: make format
